@@ -3,7 +3,7 @@ function love.load()
     keyPresses = {}
 
     debug = true
-    generateField(10)
+    generateField(20)
 end
 
 function love.update(dt)
