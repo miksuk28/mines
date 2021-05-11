@@ -29,7 +29,7 @@ function generateField(number_of_mines)
         local cell_sum = 0
 
         if field.mines[y][x] == sym.b then
-            return sym.b
+            return 0
         else
             -- sqr 1
             if y>1 and x>1 then
