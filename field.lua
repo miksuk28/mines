@@ -25,6 +25,65 @@ function generateField(mines)
         end
     end
 
+    local function check_cells(x, y)
+        local cell_sum = 0
+
+        if field.mines[y][x] == sym.b then
+            return sym.b
+        else
+            -- sqr 1
+            if y>1 and x>1 then
+                if field.mines[y-1][x-1] == sym.b then
+                    cell_sum = cell_sum + 1
+                end
+            end
+            -- sqr 2
+            if y>1 then
+                if field.mines[y-1][x] == sym.b then
+                    cell_sum = cell_sum + 1
+                end
+            end
+            -- sqr 3
+            if y>1 and x<field.w then
+                if field.mines[y-1][x+1] == sym.b then
+                    cell_sum = cell_sum + 1
+                end
+            end
+            -- sqr 4
+            if x>1 then
+                if field.mines[y][x-1] == sym.b then
+                    cell_sum = cell_sum + 1
+                end
+            end
+            -- sqr 5
+            if x<field.w then
+                if field.mines[y][x+1] == sym.b then
+                    cell_sum = cell_sum + 1
+                end
+            end
+            -- sqr 6
+            if x>1 and y<field.h then
+                if field.mines[y+1][x-1] == sym.b then
+                    cell_sum = cell_sum + 1
+                end
+            end
+            -- sqr 7
+            if y<field.h then
+                if field.mines[y+1][x] == sym.b then
+                    cell_sum = cell_sum + 1
+                end
+            end
+            -- sqr 8
+            if x<field.w and y<field.h then
+                if field.mines[y+1][x+1] == sym.b then
+                    cell_sum = cell_sum + 1
+                end
+            end
+        end
+
+        return cell_sum
+    end
+
     -- Lager tala
     for y = 1, field.h do
         for x = 1, field.w do
