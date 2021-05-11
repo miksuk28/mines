@@ -1,5 +1,6 @@
 function love.load()
     require "field"
+    load_images()
     keyPresses = {}
 
     debug = true
@@ -17,8 +18,8 @@ function love.update(dt)
     end
 end
 
-function love.draw()
-
+function love.draw(dt)
+    draw_field()
 end
 
 function love.keypressed(k)

@@ -2,6 +2,28 @@ sym = {}
     sym.b = 1
     sym.e = 0
 
+function load_images()
+    local dir = "assets"
+    imgs = {
+        love.graphics.newImage(dir .. "/1.png"),
+        love.graphics.newImage(dir .. "/2.png"),
+        love.graphics.newImage(dir .. "/3.png"),
+        love.graphics.newImage(dir .. "/4.png"),
+        love.graphics.newImage(dir .. "/5.png"),
+        love.graphics.newImage(dir .. "/6.png"),
+        love.graphics.newImage(dir .. "/7.png"),
+        love.graphics.newImage(dir .. "/8.png"),
+        love.graphics.newImage(dir .. "/closed.png"),
+        love.graphics.newImage(dir .. "/hovered.png"),
+        love.graphics.newImage(dir .. "/pressed_down.png"),
+        love.graphics.newImage(dir .. "/bomb.png"),
+        love.graphics.newImage(dir .. "/exploded.png"),
+        love.graphics.newImage(dir .. "/flag.png"),
+        love.graphics.newImage(dir .. "/no_bomb.png"),
+        love.graphics.newImage(dir .. "/empty.png"),
+    }
+end
+
 function generateField(number_of_mines)
     --1 = bomb
     field.mines = {}
@@ -117,4 +139,19 @@ function generateField(number_of_mines)
         end
     end
     --------------------------------
+end
+
+--[[
+function get_texture(x, y)
+    local cell = field.mines[y][x]
+    if cell == 1 return 
+end
+--]]
+
+function draw_field()
+    for y = 1, field.h do
+        for x = 1, field.w do
+            love.graphics.draw(imgs[9], (x*50 + 5) - 50, (y*50 + 5) - 50)
+        end
+    end
 end
