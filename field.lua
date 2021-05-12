@@ -1,6 +1,12 @@
 sym = {}
-    sym.b = 1
-    sym.e = 0
+    sym.b =             1
+    sym.e =             0
+    sym.closed =        "9"
+    sym.hovered =       "10"
+    sym.pressed_down =  "11"
+    sym.exploded =      "13"
+    sym.flag =          "14"
+    sym.no_bomb =       "15"
 
 function load_images()
     local dir = "assets"
@@ -24,6 +30,20 @@ function load_images()
     }
 end
 
+local function generate_opened()
+    field.opened = {}
+
+    for y = 1, field.h do
+        local row_x = {}
+        for x = 1, field.w do
+            table.insert(row_x, sym.e)
+        end
+        table.insert(field.opened, row_w)
+    end
+
+    if debug then print("\nOpened field generated") end
+end
+
 function generateField(number_of_mines)
     --1 = bomb
     field.mines = {}
@@ -36,6 +56,8 @@ function generateField(number_of_mines)
         end
         table.insert(field.mines, row_x)
     end
+
+    generate_opened()
 
     while number_of_mines > 0 do
         local x = love.math.random(1, field.w)
@@ -141,12 +163,16 @@ function generateField(number_of_mines)
     --------------------------------
 end
 
---[[
 function get_texture(x, y)
     local cell = field.mines[y][x]
-    if cell == 1 return 
+    if cell == 0 then
+        return 9
+    elseif type(cell) == "string" then
+        if tonumber(cell) >= 1 and onumber(cell) <= 8 then
+            return cell
+        elseif cell == ""
+    end
 end
---]]
 
 function draw_field()
     for y = 1, field.h do

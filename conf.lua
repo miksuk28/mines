@@ -4,6 +4,7 @@ field = {}
     field.h = 10
     field.dim = 50
     field.space = 5
+    field.opened = {}
 
 function love.conf(t)
     t.window.title = "Mines"
