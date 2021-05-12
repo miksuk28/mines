@@ -207,7 +207,12 @@ function draw_field()
 
     for y = 1, field.h do
         for x = 1, field.w do
-            love.graphics.draw(imgs[get_texture(x, y)], x_pos, y_pos)
+            if field.opened[y][x] == 0 and mouseX == x and mouseY == y then
+                love.graphics.draw(imgs[sym.hovered], x_pos, y_pos, 0, field.scale, field.scale)
+            else
+                love.graphics.draw(imgs[get_texture(x, y)], x_pos, y_pos, 0, field.scale, field.scale)
+            end
+            
             x_pos = field.x_start + (field.dim + field.space) * x
         end
         y_pos = field.y_start + (field.dim + field.space) * y

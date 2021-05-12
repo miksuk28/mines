@@ -16,6 +16,11 @@ function love.update(dt)
         table.remove(keyPresses, i)
         print(#keyPresses)
     end
+
+    mouseX = math.floor(love.mouse.getX() / (field.dim + field.space)) + 1
+    mouseY = math.floor(love.mouse.getY() / (field.dim + field.space)) + 1
+    
+    print(mouseX .. " " .. mouseY)
 end
 
 function love.draw(dt)
