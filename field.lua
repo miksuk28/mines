@@ -1,12 +1,12 @@
 sym = {}
     sym.b =             1
     sym.e =             0
-    sym.closed =        "9"
-    sym.hovered =       "10"
-    sym.pressed_down =  "11"
-    sym.exploded =      "13"
-    sym.flag =          "14"
-    sym.no_bomb =       "15"
+    sym.closed =        9
+    sym.hovered =       10
+    sym.pressed_down =  11
+    sym.exploded =      13
+    sym.flag =          14
+    sym.no_bomb =       15
 
 function load_images()
     local dir = "assets"
@@ -38,10 +38,13 @@ local function generate_opened()
         for x = 1, field.w do
             table.insert(row_x, sym.e)
         end
-        table.insert(field.opened, row_w)
+        table.insert(field.opened, row_x)
     end
 
     if debug then print("\nOpened field generated") end
+
+    print("Length: " .. #field.opened[1])
+    print("Element (2,2) " .. field.opened[2][2])
 end
 
 function generateField(number_of_mines)
@@ -163,6 +166,7 @@ function generateField(number_of_mines)
     --------------------------------
 end
 
+--[[
 function get_texture(x, y)
     local cell = field.mines[y][x]
     if cell == 0 then
@@ -170,14 +174,43 @@ function get_texture(x, y)
     elseif type(cell) == "string" then
         if tonumber(cell) >= 1 and onumber(cell) <= 8 then
             return cell
-        elseif cell == ""
+        elseif cell == sym.closed then
+            return 9
+        elseif cell == sym.hovered then
+            return 10
+        elseif cell == sym.pressed_down then
+            return 11
+        elseif cell == sym.exploded then
+            return 13
+        elseif cell == sym.flag then
+            return 14
+        elseif cell == sym.no_bomb then
+            return 15
+        end
+    end
+end
+--]]
+
+function get_texture(x, y)
+    local cell = field.opened[y][x]
+
+    if cell == sym.e then
+        return 9
+    else
+        return tonumber(cell)
     end
 end
 
 function draw_field()
+    local x_pos = 0
+    local y_pos = 0
+
     for y = 1, field.h do
         for x = 1, field.w do
-            love.graphics.draw(imgs[9], (x*50 + 5) - 50, (y*50 + 5) - 50)
+            love.graphics.draw(imgs[get_texture(x, y)], x_pos, y_pos)
+            x_pos = field.x_start + (field.dim + field.space) * x
         end
+        y_pos = field.y_start + (field.dim + field.space) * y
+        x_pos = field.x_start
     end
 end
