@@ -20,7 +20,7 @@ function love.update(dt)
     mouseX = math.floor(love.mouse.getX() / (field.dim + field.space)) + 1
     mouseY = math.floor(love.mouse.getY() / (field.dim + field.space)) + 1
     
-    print(mouseX .. " " .. mouseY)
+    if debug then print("X: " .. mouseX .. " " .. "Y: " .. mouseY) end
 end
 
 function love.draw(dt)
