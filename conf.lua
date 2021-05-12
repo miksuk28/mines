@@ -1,5 +1,8 @@
+--## conf.lua ##--
+
 field = {}
     field.mines =   {}
+    field.opened =  {}
     field.w =       10
     field.h =       10
     field.x_start =  0
@@ -7,7 +10,6 @@ field = {}
     field.dim =     50
     field.space =    5
     field.scale =    1   
-    field.opened =  {}
 
 function love.conf(t)
     t.window.title = "Mines"

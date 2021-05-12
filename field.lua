@@ -1,9 +1,12 @@
+-- ## field.lua ##--
+
 sym = {}
     sym.b =             1
     sym.e =             0
     sym.closed =        9
     sym.hovered =       10
     sym.pressed_down =  11
+    sym.bomb =          12
     sym.exploded =      13
     sym.flag =          14
     sym.no_bomb =       15
@@ -42,10 +45,30 @@ local function generate_opened()
         table.insert(field.opened, row_x)
     end
 
-    if debug then print("\nOpened field generated") end
+    if debug then
+        print("\nOpened field generated")
+    end
+end
 
-    print("Length: " .. #field.opened[1])
-    print("Element (2,2) " .. field.opened[2][2])
+-- debug
+local function print_opened()
+    if debug then
+        print("\n")
+        for y = 1, #field.opened do
+            local row_x = ""
+            for x = 1, #field.opened[1] do
+                local cell = field.opened[y][x]
+                
+                if type(cell) == "number" then
+                    row_x = row_x .. " " .. cell .. " "
+                else
+                    row_x = row_x .. "'" .. cell .. "'"
+                end
+            end
+            print(row_x)
+        end
+        print("\n")
+    end
 end
 
 function generateField(number_of_mines)
@@ -197,6 +220,13 @@ function get_texture(x, y)
 
     if cell == sym.e then
         return 9
+    elseif cell == 1 then
+        return sym.bomb
+    elseif cell == sym.e then
+        print("Tile is empty")
+        return sym.empty
+    elseif cell == sym.empty then
+        return 16
     else
         return tonumber(cell)
     end
@@ -211,20 +241,25 @@ function draw_field()
             if field.opened[y][x] == sym.e and mouseX == x and mouseY == y then
                 if keyPresses.right then
                     cell = sym.pressed_down
-                    field.opened[y][x] = field.mines[y][x]
-
+                    if field.mines[y][x] == 0 then
+                        field.opened[y][x] = sym.empty
+                    else
+                        field.opened[y][x] = field.mines[y][x]
+                    end
+                    
                 elseif keyPresses.left then
                     if field.opened[y][x] == sym.e then
                         cell = sym.flag
                         field.opened[y][x] = sym.flag
                     elseif field.opened[y][x] == sym.flag then
                         cell = sym.closed
-                        field.opened[y][x] = sym.e
+                        field.opened[y][x] = sym.empty
                     end
                 else
                     cell = sym.hovered
                 end
 
+                if debug then print_opened() end
                 love.graphics.draw(imgs[cell], x_pos, y_pos, 0, field.scale, field.scale)
             else
                 love.graphics.draw(imgs[get_texture(x, y)], x_pos, y_pos, 0, field.scale, field.scale)
