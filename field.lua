@@ -7,6 +7,7 @@ sym = {}
     sym.exploded =      13
     sym.flag =          14
     sym.no_bomb =       15
+    sym.empty =         16
 
 function load_images()
     local dir = "assets"
@@ -207,16 +208,18 @@ function draw_field()
 
     for y = 1, field.h do
         for x = 1, field.w do
-            if field.opened[y][x] == 0 and mouseX == x and mouseY == y then
-                if love.mouse.isDown(1) then
+            if field.opened[y][x] == sym.e and mouseX == x and mouseY == y then
+                if keyPresses.right then
                     cell = sym.pressed_down
-                elseif love.mouse.isDown(2) then
+                    field.opened[y][x] = field.mines[y][x]
+
+                elseif keyPresses.left then
                     if field.opened[y][x] == sym.e then
                         cell = sym.flag
                         field.opened[y][x] = sym.flag
-                        while(love.mouse.isDown(2)) do
-                            print("Waiting for release")
-                        end
+                    elseif field.opened[y][x] == sym.flag then
+                        cell = sym.closed
+                        field.opened[y][x] = sym.e
                     end
                 else
                     cell = sym.hovered
