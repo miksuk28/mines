@@ -210,6 +210,14 @@ function draw_field()
             if field.opened[y][x] == 0 and mouseX == x and mouseY == y then
                 if love.mouse.isDown(1) then
                     cell = sym.pressed_down
+                elseif love.mouse.isDown(2) then
+                    if field.opened[y][x] == sym.e then
+                        cell = sym.flag
+                        field.opened[y][x] = sym.flag
+                        while(love.mouse.isDown(2)) do
+                            print("Waiting for release")
+                        end
+                    end
                 else
                     cell = sym.hovered
                 end
