@@ -30,6 +30,8 @@ function love.draw(dt)
 
     keyPresses.left =   false
     keyPresses.right =  false
+
+    love.graphics.setBackgroundColor(1,1,1)
 end
 
 function love.mousepressed(x, y, button)
